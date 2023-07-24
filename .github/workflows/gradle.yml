@@ -6,8 +6,8 @@ on:
     paths: backend/**
 
 permissions:
-  contents: read
-
+  contents: write-all
+  
 jobs:
   build:
 
