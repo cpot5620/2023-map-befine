@@ -1,10 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI with Gradle
 
 on:
@@ -12,9 +5,8 @@ on:
     branches: [ develop, main ]
     paths: backend/**
 
-defaults:
-  run:
-    working-directory: backend
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -31,10 +23,12 @@ jobs:
         
     - name: gradlew 실행 권한 부여
       run: chmod +x gradlew
+      working-directory: backend
 
     - name: Gradle build 시작
       run: ./gradlew build
-    
+      working-directory: backend
+
     - name: 테스트 결과를 PR에 코멘트로 등록합니다
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
@@ -47,4 +41,3 @@ jobs:
       with:
         report_paths: '**/build/test-results/test/TEST-*.xml'
         token: ${{ github.token }}
-    
